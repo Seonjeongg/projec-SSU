@@ -15,25 +15,25 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    // 회원 가입
     public void save(MemberDTO memberDTO) {
-        // Convert DTO to entity without ID
         MemberEntity memberEntity = MemberEntity.fromDTOWithoutId(memberDTO);
         memberRepository.save(memberEntity);
     }
 
+    // 로그인
     public MemberDTO login(MemberDTO memberDTO) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByEmail(memberDTO.getEmail());
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByStudentId(memberDTO.getStudentId());
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             if (memberEntity.getPassword().equals(memberDTO.getPassword())) {
-                // Convert entity to DTO and return
                 return MemberDTO.fromEntity(memberEntity);
             }
         }
-        // Return null if login fails
         return null;
     }
 
+    // 모든 회원 조회
     public List<MemberDTO> findAll() {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
@@ -43,22 +43,38 @@ public class MemberService {
         return memberDTOList;
     }
 
+    // 특정 회원 조회
     public MemberDTO findById(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         return optionalMemberEntity.map(MemberDTO::fromEntity).orElse(null);
     }
 
-    public MemberDTO updateForm(Long id) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-        return optionalMemberEntity.map(MemberDTO::fromEntity).orElse(null);
-    }
-
+    // 회원 정보 수정
     public void update(MemberDTO memberDTO) {
-        // Update with ID
-        memberRepository.save(MemberEntity.fromDTO(memberDTO));
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberDTO.getId());
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            memberEntity.setEmail(memberDTO.getEmail());
+            memberEntity.setPassword(memberDTO.getPassword());
+            memberEntity.setName(memberDTO.getName());
+            memberEntity.setPhoneNumber(memberDTO.getPhoneNumber());
+            memberEntity.setPortfolio(memberDTO.getPortfolio());
+            memberEntity.setYear(memberDTO.getYear());
+            memberEntity.setIntroduction(memberDTO.getIntroduction());
+            memberRepository.save(memberEntity);
+        } else {
+            throw new IllegalArgumentException("Member with ID " + memberDTO.getId() + " not found");
+        }
     }
 
+    // 회원 삭제
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    // 학번 중복 체크
+    public String studentIdCheck(String studentId) {
+        Optional<MemberEntity> byStudentId = memberRepository.findByStudentId(studentId);
+        return byStudentId.isPresent() ? "no" : "ok";
     }
 }

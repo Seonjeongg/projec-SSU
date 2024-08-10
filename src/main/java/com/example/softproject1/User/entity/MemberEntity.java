@@ -1,13 +1,11 @@
 package com.example.softproject1.User.entity;
 
-import com.example.softproject1.Application.Application;
 import com.example.softproject1.Article.Article;
 import com.example.softproject1.User.dto.MemberDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +18,7 @@ public class MemberEntity {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private Long studentId; // 학번(아이디)
+    private String studentId; // 학번(아이디)
 
     @Column
     private String email; // 이메일
@@ -45,9 +43,6 @@ public class MemberEntity {
 
     @Column
     private String portfolio; // 포트폴리오
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Application> applications;
 
 
     // Convert DTO to Entity
