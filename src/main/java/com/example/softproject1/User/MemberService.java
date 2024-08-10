@@ -1,8 +1,8 @@
-package com.example.softproject1.User.service;
+package com.example.softproject1.User;
 
-import com.example.softproject1.User.dto.MemberDTO;
-import com.example.softproject1.User.entity.MemberEntity;
-import com.example.softproject1.User.repository.MemberRepository;
+import com.example.softproject1.User.MemberDTO;
+import com.example.softproject1.User.MemberEntity;
+import com.example.softproject1.User.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

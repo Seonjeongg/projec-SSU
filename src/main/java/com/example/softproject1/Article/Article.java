@@ -1,18 +1,14 @@
 package com.example.softproject1.Article;
 
 import com.example.softproject1.Application.Application;
-import com.example.softproject1.Comment.Comment;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.example.softproject1.User.entity.MemberEntity;
+import com.example.softproject1.User.MemberEntity;
 
 @Entity
 @Getter @Setter

@@ -1,7 +1,7 @@
 package com.example.softproject1.Application;
 
 
-import com.example.softproject1.User.dto.MemberDTO;
+import com.example.softproject1.User.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

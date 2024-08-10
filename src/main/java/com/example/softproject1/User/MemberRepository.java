@@ -1,6 +1,6 @@
-package com.example.softproject1.User.repository;
+package com.example.softproject1.User;
 
-import com.example.softproject1.User.entity.MemberEntity;
+import com.example.softproject1.User.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

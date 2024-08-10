@@ -1,12 +1,8 @@
-package com.example.softproject1.User.entity;
+package com.example.softproject1.User;
 
-import com.example.softproject1.Article.Article;
-import com.example.softproject1.User.dto.MemberDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter

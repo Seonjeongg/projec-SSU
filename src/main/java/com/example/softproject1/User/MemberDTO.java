@@ -1,6 +1,5 @@
-package com.example.softproject1.User.dto;
+package com.example.softproject1.User;
 
-import com.example.softproject1.User.entity.MemberEntity;
 import lombok.*;
 
 @Getter
