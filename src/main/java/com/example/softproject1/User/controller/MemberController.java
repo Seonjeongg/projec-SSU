@@ -4,7 +4,6 @@ import com.example.softproject1.User.dto.MemberDTO;
 import com.example.softproject1.User.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +16,9 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody MemberDTO memberDTO) {
-        if (memberDTO.getStudentId() == null) {
-            return ResponseEntity.badRequest().body("studentId cannot be null");
-        }
+    public String save(@RequestBody MemberDTO memberDTO) {
         memberService.save(memberDTO);
-        return ResponseEntity.ok("Member saved successfully");
+        return "Member saved successfully";
     }
 
     // 로그인
@@ -30,11 +26,9 @@ public class MemberController {
     public String login(@RequestBody MemberDTO memberDTO, HttpSession session) {
         MemberDTO loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
-            // 로그인 성공
-            session.setAttribute("loginId", loginResult.getStudentId());
+            session.setAttribute("loginId", loginResult.getId());
             return "Login successful";
         } else {
-            // 로그인 실패
             return "Login failed";
         }
     }
@@ -79,5 +73,13 @@ public class MemberController {
         return "Logout successful";
     }
 
-    // 이메일 중복 체크 기능 삭제
+    // 프로필 조회
+    @GetMapping("/profile")
+    public MemberDTO getProfile(HttpSession session) {
+        Long myId = (Long) session.getAttribute("loginId");
+        if (myId == null) {
+            throw new IllegalStateException("User not logged in");
+        }
+        return memberService.findById(myId);
+    }
 }

@@ -9,30 +9,33 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class MemberDTO {
-    private Long studentId; // 학번(아이디)
+    private Long id;
+    private String studentId;  // `Long` 타입으로 수정, 학번
+    private String email;    // 이메일
     private String password; // 비밀번호
-    private String name; // 이름
+    private String name;     // 이름
     private String department; // 학부
-    private String year; // 학년
+    private String year;     // 학년
     private String phoneNumber; // 전화번호
-    private String email; // 이메일
     private String introduction; // 자기소개
     private String portfolio; // 포트폴리오
 
+    // Entity를 DTO로 변환하는 메서드
     public static MemberDTO fromEntity(MemberEntity memberEntity) {
         if (memberEntity == null) {
             return null;
         }
         return new MemberDTO(
-                memberEntity.getStudentId(), // 학번(아이디)
-                memberEntity.getPassword(), // 비밀번호
-                memberEntity.getName(), // 이름
-                memberEntity.getDepartment(), // 학부
-                memberEntity.getYear(), // 학년
-                memberEntity.getPhoneNumber(), // 전화번호
-                memberEntity.getEmail(), // 이메일
-                memberEntity.getIntroduction(), // 자기소개
-                memberEntity.getPortfolio() // 포트폴리오
+                memberEntity.getId(),
+                memberEntity.getStudentId(),
+                memberEntity.getEmail(),
+                memberEntity.getPassword(),
+                memberEntity.getName(),
+                memberEntity.getDepartment(),
+                memberEntity.getYear(),
+                memberEntity.getPhoneNumber(),
+                memberEntity.getIntroduction(),
+                memberEntity.getPortfolio()
         );
     }
 }
