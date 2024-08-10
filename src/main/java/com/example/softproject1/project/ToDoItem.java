@@ -16,28 +16,34 @@ import java.time.LocalDateTime;
 @Table(name = "todo_item")
 public class ToDoItem {
 
-    // Getters
-    // Setters 생상 않음 (필요한 비즈니스 메서드만 생상 예정)
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Getter
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Getter
     @Column(name = "description", length = 500)
     private String description;
 
-    @Getter
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    protected ToDoItem() {}
+
+    private ToDoItem(String title,String description){
+        this.title = title;
+        this.description = description;
+    }
+
+
+    public static ToDoItem createToDoItem(String title, String description) {
+        return new ToDoItem(title, description);
+    }
 
     @PrePersist
     protected void onCreate() {
@@ -51,5 +57,30 @@ public class ToDoItem {
         this.updatedAt = LocalDateTime.now();
     }
 
-}
+    // Getters
+    public Long getId() {
+        return id;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    // 비즈니스 메서드
+    public void updateTitleAndDescription(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+}

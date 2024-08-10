@@ -1,7 +1,5 @@
-package com.example.softproject1.User.controller;
+package com.example.softproject1.User;
 
-import com.example.softproject1.User.dto.MemberDTO;
-import com.example.softproject1.User.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;

@@ -1,15 +1,11 @@
 package com.example.softproject1.Article;
 
-import com.example.softproject1.User.entity.MemberEntity;
-import com.example.softproject1.User.repository.MemberRepository;
+import com.example.softproject1.User.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor

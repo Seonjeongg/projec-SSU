@@ -5,17 +5,15 @@ import com.example.softproject1.Application.ResourceNotFoundException;
 import com.example.softproject1.Comment.Comment;
 import com.example.softproject1.Comment.CommentRepository;
 import com.example.softproject1.Comment.CommentService;
-import com.example.softproject1.User.entity.MemberEntity;
-import com.example.softproject1.User.repository.MemberRepository;
+import com.example.softproject1.User.MemberEntity;
+import com.example.softproject1.User.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController

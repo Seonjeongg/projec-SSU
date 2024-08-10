@@ -1,7 +1,7 @@
 package com.example.softproject1.Application;
 
 import com.example.softproject1.Article.Article;
-import com.example.softproject1.User.entity.MemberEntity;
+import com.example.softproject1.User.MemberEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

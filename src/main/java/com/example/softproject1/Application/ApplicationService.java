@@ -2,8 +2,8 @@ package com.example.softproject1.Application;
 
 import com.example.softproject1.Article.Article;
 import com.example.softproject1.Article.ArticleRepository;
-import com.example.softproject1.User.entity.MemberEntity;
-import com.example.softproject1.User.repository.MemberRepository;
+import com.example.softproject1.User.MemberEntity;
+import com.example.softproject1.User.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
