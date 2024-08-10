@@ -1,4 +1,4 @@
-package com.example.softproject1.project;
+package com.example.softproject1.project.ToDo;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
