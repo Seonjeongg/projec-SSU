@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("/api/todos")
+@CrossOrigin("*")
+@RequestMapping("/todos")
 public class ToDoItemController {
 
     private final ToDoItemService toDoItemService;
