@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class MemberController {
     private final MemberService memberService;
 
@@ -34,14 +34,14 @@ public class MemberController {
     }
 
     // 모든 회원 조회
-    @GetMapping("/")
+    @GetMapping("/login")
     public ResponseEntity<List<MemberDTO>> findAll() {
         List<MemberDTO> members = memberService.findAll();
         return new ResponseEntity<>(members, HttpStatus.OK);
     }
 
     // 특정 회원 조회
-    @GetMapping("/{id}")
+    @GetMapping("/login/{id}")
     public ResponseEntity<MemberDTO> findById(@PathVariable Long id) {
         MemberDTO member = memberService.findById(id);
         if (member != null) {
@@ -52,7 +52,7 @@ public class MemberController {
     }
 
     // 회원 정보 수정 페이지
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody MemberDTO memberDTO) {
         // ID를 기반으로 회원 정보 수정
         memberDTO.setId(id);  // 클라이언트로부터 받은 DTO에 ID 설정

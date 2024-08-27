@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter @Setter
@@ -16,7 +17,7 @@ public class ApplicationDetailDTO {
     private Long articleId;
     private MemberDTO member; // MemberDTO를 포함
 
-    private LocalDateTime appliedAt;
+    private LocalDate appliedAt;
 
     public ApplicationDetailDTO(Application application) {
         if (application.getMember() == null) {

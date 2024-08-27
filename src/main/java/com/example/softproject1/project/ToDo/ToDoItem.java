@@ -8,10 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "todo_item")
 public class ToDoItem {
 
@@ -21,16 +25,19 @@ public class ToDoItem {
     private Long id;
 
     @Column(name = "title", nullable = false)
-    private String title;
+    private String title; //제목
 
     @Column(name = "description", length = 500)
-    private String description;
+    private String description; //투두 내용
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt; //생성날짜
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt; //수정날짜
+
+    @Column
+    private Long teamId; //팀 id
 
     protected ToDoItem() {}
 

@@ -36,7 +36,7 @@ public class ArticleController {
     private CommentService commentService;
 
 
-    @PostMapping("/articles/{user_id}")
+    @PostMapping("/articles/{user_id}") //게시글 쓰기
     public ResponseEntity<String> createArticle(@PathVariable("user_id") Long userId, @RequestBody ArticleDTO articleDTO) {
         try {
         // Member를 데이터베이스에서 찾음
@@ -68,7 +68,7 @@ public class ArticleController {
 }
 
 
-    @PutMapping("/articles/{user_id}/{id}")
+    @PutMapping("/articles/{user_id}/{id}") //게시글 수정하기
     public ResponseEntity<Article> updateArticle(@PathVariable("user_id") Long userId, @PathVariable Long id, @RequestBody ArticleDTO updatedArticleDTO) {
         Optional<Article> optionalArticle = articleRepository.findById(id);
         if (optionalArticle.isPresent()) {
@@ -93,7 +93,7 @@ public class ArticleController {
         }
     }
 
-    @DeleteMapping("/articles/{user_id}/{id}")
+    @DeleteMapping("/articles/{user_id}/{id}") //게시글 삭제
     public ResponseEntity<Void> deleteArticle(@PathVariable("user_id") Long userId, @PathVariable Long id) {
         if (articleRepository.existsById(id)) {
             articleRepository.deleteById(id);
@@ -103,21 +103,24 @@ public class ArticleController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Page<ArticleDTO>> index(@RequestParam(value = "page", defaultValue = "0") int page) {
-        Page<ArticleDTO> paging = articleService.getList(page);
-        return new ResponseEntity<>(paging, HttpStatus.OK);
+    @GetMapping("/articles") //게시글 목록
+    public ResponseEntity<List<ArticleDTO>> index() {
+        List<ArticleDTO> articles = articleService.getAllArticles(); // 전체 게시물 목록을 가져옵니다.
+        return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+
+    @GetMapping("/articles/{id}") //해당 게시글 보기
     public ResponseEntity<ArticleDTO> getArticle(@PathVariable Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Article not found"));
+        Article article = articleRepository.findByIdWithMember(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Article not found"));
+
         ArticleDTO articleDto = new ArticleDTO(article);
         return ResponseEntity.ok(articleDto);
-}
+    }
 
 
-    @GetMapping("/articles/{id}/with-comments")
+    @GetMapping("/articles/{id}/with-comments") //해당게시글의 댓글
     public ResponseEntity<ArticleWithCommentsDTO> getArticleWithComments(@PathVariable Long id) {
         Optional<Article> optionalArticle = articleRepository.findById(id);
         if (optionalArticle.isPresent()) {
@@ -130,6 +133,17 @@ public class ArticleController {
         }
     }
 
+    @GetMapping("/articles/my/{user_id}") //내가쓴 글 보기 -> id만 전달
+    public ResponseEntity<List<Long>> getArticlesByUserId(@PathVariable Long user_id) {
+        List<Long> articleIds = articleService.getArticleIdsByUserId(user_id);
+        return new ResponseEntity<>(articleIds, HttpStatus.OK);
+    }
+
+    @GetMapping("/articles/myarticle/{user_id}") // 내가 쓴 글 목록
+    public ResponseEntity<List<ArticleDTO>> getArticlemyArticle(@PathVariable("user_id") Long userId) {
+        List<ArticleDTO> articles = articleService.getArticlesByUserId(userId);
+        return new ResponseEntity<>(articles, HttpStatus.OK);
+    }
 
 
 }

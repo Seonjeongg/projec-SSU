@@ -8,5 +8,7 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     // 학번으로 회원 정보 조회 (select * from member_table where student_id=?)
     Optional<MemberEntity> findByStudentId(String studentId);
+
+    MemberEntity findByname(String name);
 }
 

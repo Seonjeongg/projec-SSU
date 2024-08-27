@@ -1,6 +1,8 @@
 package com.example.softproject1.project.ToDo;
 
+import com.example.softproject1.Application.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,64 +11,41 @@ import java.util.NoSuchElementException;
 @Service
 public class ToDoItemService {
 
-    private final ToDoItemRepository toDoItemRepository;
+    @Autowired
+    private ToDoItemRepository toDoItemRepository;
 
-    public ToDoItemService(ToDoItemRepository toDoItemRepository) {
-        this.toDoItemRepository = toDoItemRepository;
+    //팀 id 찾기
+    public List<ToDoItem> findByTeamId(Long teamId) {
+        return toDoItemRepository.findByTeamId(teamId);
     }
 
-    /**
-     * 모든 할 일 조회
-     */
-    public List<ToDoItem> findAll() {
-        return toDoItemRepository.findAll();
+    //투두 리스트 저장
+    public ToDoItem save(ToDoItemDto toDoItemDto) {
+        ToDoItem toDoItem = new ToDoItem();
+        toDoItem.setTitle(toDoItemDto.getTitle());
+        toDoItem.setDescription(toDoItemDto.getDescription());
+        toDoItem.setTeamId(toDoItemDto.getTeamId()); // 팀 ID 설정
+        return toDoItemRepository.save(toDoItem);
     }
 
-    /**
-     * 단일 할 일 조회
-     */
+    //투두 리스트 수젇
+    public ToDoItem update(Long id, ToDoItemDto toDoItemDto) {
+        ToDoItem toDoItem = toDoItemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("ToDoItem not found"));
+        toDoItem.setTitle(toDoItemDto.getTitle());
+        toDoItem.setDescription(toDoItemDto.getDescription());
+        toDoItem.setTeamId(toDoItemDto.getTeamId()); // 팀 ID 업데이트
+        return toDoItemRepository.save(toDoItem);
+    }
+
+    //투두 리스트 삭제
+    public void deleteById(Long id) {
+        toDoItemRepository.deleteById(id);
+    }
+
+    //해당 투두 찾기
     public ToDoItem findById(Long id) {
         return toDoItemRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("해당 할 일을 찾을 수 없어요. id: [" + id + "]"));
-    }
-
-    /**
-     * 할 일 저장
-     */
-    @Transactional
-    public ToDoItem save(ToDoItemDto toDoItemDto) {
-        // 엔티티 생성
-        ToDoItem toDoItem = ToDoItem.createToDoItem(toDoItemDto.title(), toDoItemDto.description());
-
-        // 엔티티 저장
-        toDoItemRepository.save(toDoItem);
-
-        return toDoItem;
-    }
-
-    /**
-     * 할 일 수정
-     */
-    @Transactional
-    public ToDoItem update(Long id, ToDoItemDto toDoItemDto) {
-        // 엔티티 조회
-        ToDoItem toDoItem = findById(id);
-
-        // 엔티티 수정
-        toDoItem.updateTitleAndDescription(toDoItemDto.title(), toDoItemDto.description());
-
-        return toDoItem;
-    }
-
-    /**
-     * 할 일 삭제
-     */
-    @Transactional
-    public void deleteById(Long id) {
-        // 엔티티 존재 여부 확인 및 삭제
-        if (!toDoItemRepository.existsById(id)) {
-            throw new NoSuchElementException("해당 할 일을 찾을 수 없어요. id: [" + id + "]");
-        }
-        toDoItemRepository.deleteById(id);
+                .orElseThrow(() -> new ResourceNotFoundException("ToDoItem not found with id " + id));
     }
 }

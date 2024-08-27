@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,13 +21,17 @@ public class Application {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", nullable = false)
-    private Article article;
+    private Article article; //게시글
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
-    private MemberEntity member;
+    private MemberEntity member; //지원자
 
     @Column(nullable = false)
-    private LocalDateTime appliedAt = LocalDateTime.now();
+    private LocalDate appliedAt = LocalDate.now();//지원일자
+
+    @Column(nullable = false)
+    private String status;
 
 }
+
